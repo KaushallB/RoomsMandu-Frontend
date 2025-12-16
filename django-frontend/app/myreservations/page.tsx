@@ -1,8 +1,6 @@
 import Image from 'next/image';
-import ContactButton from '@/app/components/ContactsButton';
-import PropertyList from '@/app/components/properties/PropertyLists';
 
-const LandlordDetailsPage = () => {
+const MyReservationsPage = () => {
     return (
         <main className="max-w-1500px mx-auto px-6 pb-6">
             <h1 className='my-6 text-2xl'>Reservation</h1> 
@@ -61,4 +59,4 @@ const LandlordDetailsPage = () => {
     )
 }
 
-export default LandlordDetailsPage;
+export default MyReservationsPage;
