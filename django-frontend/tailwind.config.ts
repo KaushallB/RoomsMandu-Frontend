@@ -1,21 +1,17 @@
-import type { Config } from "tailwindcss";
-
-const config: Config = {
-    content: [
-        "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-        "./components/**/*.{js,ts,jsx,tsx,mdx}",
-        "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    ],
-    theme: {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
     extend: {
-        colors: {
-        'roomsmandu': '#ff385c',
-        'roomsmandu-dark': '#d50027'
-            },
-        },
+      colors: {
+        roomsmandu: "#ff385c",
+        "roomsmandu-dark": "#d50027",
+      },
     },
-    plugins: [],
+  },
+  plugins: [],
 };
-
-export default config;
-

@@ -1,13 +1,16 @@
-import Image from "next/image";
+import Categories from "./components/Categories";
+import PropertyList from "./components/properties/PropertyLists";
+
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="">
-        Rooms Mandu
+      <main className="max-w-1500px mx-auto px-6">
+        <Categories />
 
-        <h2 className="text-roomsmandu"> Django and next</h2>
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 ">
+          <PropertyList />
+        </div>
+
       </main>
-    </div>
   );
 }
