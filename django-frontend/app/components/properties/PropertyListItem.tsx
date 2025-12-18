@@ -1,13 +1,22 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { PropertyType } from "./PropertyLists";
+
+interface PropertyProps {
+    property: PropertyType
+}
 
 
-const PropertyListItem = () =>{
+const PropertyListItem: React.FC<PropertyProps> = ({
+    property
+}) => {
     return (
-      <div className="cursor-pointer">
+    <div className="cursor-pointer">
         <div className="relative overflow-hidden aspect-square rounded-xl">
             <Image fill
-                src='/house1.jpg'
+                src={property.image_url}
+                // src='/house1.jpg'
+                
                 alt='house1'
                 sizes="(max-width:768 px) 768 px, (max-width: 1200px): 768px, 768px" 
                 className="hover:scale-110 object-cover transition h-full w-full" 
@@ -15,11 +24,11 @@ const PropertyListItem = () =>{
         </div>
 
         <div className="mt-2">
-            <p className="text-lg font-bold"> Property Name </p>
+            <p className="text-lg font-bold"> {property.title} </p>
         </div>
 
          <div className="mt-2">
-            <p className="text-sm text-gray-500"><strong> Rs 15000 </strong> per month  </p>
+            <p className="text-sm text-gray-500"><strong> {property.price_per_month} </strong> per month  </p>
         </div>
 
 
