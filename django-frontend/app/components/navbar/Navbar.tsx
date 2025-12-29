@@ -24,7 +24,7 @@ const Navbar = async () =>{
                     <div className='flex space-6'>
                         <SearchFilter />
                     </div>
-
+                    
                     <div className="flex items-center space-x-6">
                         <AddProperty 
                             userId={userId}/>
