@@ -5,17 +5,22 @@ import { use, useEffect, useState } from 'react';
 import ReservationSidebar from '../../components/properties/ReservationSidebar';
 
 import apiService from '@/app/services/apiService';
+import { getUserId } from '@/app/lib/actions';
 
 const PropertyDetails = ({params}: {params: Promise<{id: string}>}) => {
     const { id } = use(params);
     const [property, setProperty] = useState<any>(null);
+    const [userId, setUserId] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchProperty = async () => {
             try {
                 const data = await apiService.get(`/api/v1/properties/${id}`);
+                const user = await getUserId();
+                
                 setProperty(data);
+                setUserId(user);
             } catch (error) {
                 console.error('Error fetching property:', error);
             } finally {
@@ -77,6 +82,7 @@ const PropertyDetails = ({params}: {params: Promise<{id: string}>}) => {
 
                 <ReservationSidebar 
                     property={property}
+                    userId={userId}
                 />
 
             </div>
