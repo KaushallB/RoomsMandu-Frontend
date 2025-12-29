@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { use, useEffect, useState } from 'react';
 import ReservationSidebar from '../../components/properties/ReservationSidebar';
 
@@ -57,7 +58,9 @@ const PropertyDetails = ({params}: {params: Promise<{id: string}>}) => {
                     </span>
 
                     <hr />
-                <div className="py-6 flex items-center space-x-4">
+                <Link 
+                    href={`/landlords/${property.landlord.id}`}
+                    className="py-6 flex items-center space-x-4">
                     {property.landlord.avatar_url && (
                     <Image 
                         src={property.landlord.avatar_url}
@@ -68,8 +71,9 @@ const PropertyDetails = ({params}: {params: Promise<{id: string}>}) => {
                     />
                     )}
 
-                    <p><strong> {property.landlord.name} </strong> is the owner </p>
-                </div>
+                    <p><strong>{property?.landlord?.name?.[0]?.toUpperCase() +
+                                    property?.landlord?.name?.slice(1)}</strong> is the owner </p>
+                </Link >
 
                 <hr />
             
