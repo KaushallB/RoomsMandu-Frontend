@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { use, useEffect, useState } from 'react';
-import ContactButton from '@/app/components/ContactsButton';
+import ContactsButton from '@/app/components/ContactsButton';
 import PropertyList from '@/app/components/properties/PropertyLists';
 import apiService from '@/app/services/apiService';
 import { getUserId } from '@/app/lib/actions';
@@ -32,15 +32,15 @@ const LandlordDetailsPage = ({params}: {params: Promise<{id:string}>}) => {
     }, [id]);
 
     if (loading) {
-        return <div className="max-w-1500px mx-auto px-6 py-12">Loading...</div>;
+        return <div className="max-w-[1500px] mx-auto px-6 py-12">Loading...</div>;
     }
 
     if (!landlord) {
-        return <div className="max-w-1500px mx-auto px-6 py-12">Landlord not found</div>;
+        return <div className="max-w-[1500px] mx-auto px-6 py-12">Landlord not found</div>;
     }
 
     return (
-        <main className="max-w-1500px mx-auto px-6 pb-6">
+        <main className="max-w-[1500px] mx-auto px-6 pb-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <aside className="col-span-1 md-4">
                     <div className="flex flex-col items-center p-6 rounded-xl border border-gray-300 shadow-xl">
@@ -59,8 +59,11 @@ const LandlordDetailsPage = ({params}: {params: Promise<{id:string}>}) => {
 
                         <h1 className='mt-6 text-2xl'> {landlord.name} </h1>
 
-                    {userId != id && (
-                        <ContactButton />
+                    {userId !== id && (
+                        <ContactsButton  
+                            userId={userId}
+                            landlordId={id}
+                        />
                     )}
                         
                     </div>

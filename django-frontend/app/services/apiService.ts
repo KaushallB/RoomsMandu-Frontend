@@ -19,6 +19,7 @@ const apiService= {
         console.log('get', url);
 
         const token = getTokenFromCookies();
+        console.log('Token found:', token ? 'Yes' : 'No');
 
         return new Promise((resolve, reject) => {
             fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`,{

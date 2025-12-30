@@ -33,15 +33,15 @@ const PropertyDetails = ({params}: {params: Promise<{id: string}>}) => {
     }, [id]);
 
     if (loading) {
-        return <div className="max-w-1500px mx-auto px-6 py-12">Loading...</div>;
+        return <div className="max-w-[1500px] mx-auto px-6 py-12">Loading...</div>;
     }
 
     if (!property) {
-        return <div className="max-w-1500px mx-auto px-6 py-12">Property not found</div>;
+        return <div className="max-w-[1500px] mx-auto px-6 py-12">Property not found</div>;
     }
 
     return (
-        <main className="max-w-1500px mx-auto px-6 pb-6">
+        <main className="max-w-[1500px] mx-auto px-6 pb-6">
             <div className="w-full h-[80vh] mb-4 overflow-hidden rounded-xl relative">
                 <Image fill
                     src={property.image_url}
