@@ -6,6 +6,7 @@ import Image from 'next/image';
 import PropertyListItem from './PropertyListItem';
 import apiService from '@/app/services/apiService';
 import useSearchModal from '@/app/hooks/useSearchModal';
+import { useSearchParams } from 'next/navigation';
 
 export type PropertyType = {
     id: string;
@@ -26,6 +27,8 @@ const PropertyList: React.FC<PropertyListProps> = ({
     userId,
     favourites
 }) =>{
+
+    const params = useSearchParams();
     const [properties, setProperties] = useState<PropertyType[]>([]);
 
     const searchModal = useSearchModal();
@@ -113,7 +116,7 @@ const PropertyList: React.FC<PropertyListProps> = ({
 
     useEffect(()=>{
         getProperties();
-    },[landlord_id, favourites, district, selectedCategory, budgetRange, numRooms, numKitchen, numBathrooms]);
+    },[landlord_id, favourites, district, selectedCategory, budgetRange, numRooms, numKitchen, numBathrooms, params]);
 
     return (
         <>
