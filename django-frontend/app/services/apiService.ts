@@ -92,6 +92,85 @@ const apiService= {
                     reject(error);
                 })
         })
+    },
+
+    put: async function(url:string, data:any): Promise<any> {
+        console.log('PUT', url, data);
+
+        const token = getTokenFromCookies();
+        
+        // Check if data is FormData
+        const isFormData = data instanceof FormData;
+        
+        // Prepare headers
+        const headers: any = {
+            'Accept': 'application/json',
+        };
+        
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        
+        // Only set Content-Type for JSON, not FormData
+        if (!isFormData) {
+            headers['Content-Type'] = 'application/json';
+        }
+
+        return new Promise((resolve, reject) => {
+            fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`,{
+                method: 'PUT',
+                body: isFormData ? data : JSON.stringify(data),
+                headers: headers
+            })
+                .then(async (response) => {
+                    const text = await response.text();
+                    let json;
+                    try {
+                        json = JSON.parse(text);
+                    } catch {
+                        json = { error: text };
+                    }
+                    resolve(json);
+                })
+                .catch((error) => {
+                    reject(error);
+                })
+        })
+    },
+
+    delete: async function(url:string): Promise<any> {
+        console.log('DELETE', url);
+
+        const token = getTokenFromCookies();
+        
+        const headers: any = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        };
+        
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        return new Promise((resolve, reject) => {
+            fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`,{
+                method: 'DELETE',
+                headers: headers
+            })
+                .then(async (response) => {
+                    const text = await response.text();
+                    let json;
+                    try {
+                        json = JSON.parse(text);
+                    } catch {
+                        json = { error: text };
+                    }
+                    resolve(json);
+                })
+                .catch((error) => {
+                    reject(error);
+                })
+        })
     }
 
 }

@@ -3,10 +3,14 @@
 import { useState } from 'react';
 import apiService from '@/app/services/apiService';
 import useLoginModal from '@/app/hooks/useLoginModal';
+import { showToast } from '../Toast';
 
 export type Property = {
     id: string;
     price_per_month: number;
+    landlord: {
+        id: string;
+    };
 }
 
 interface ReservationSidebarProps {
@@ -19,6 +23,9 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
     userId
 }) => {
     const loginModal = useLoginModal();
+    
+    // Check if current user is the owner
+    const isOwner = userId && property.landlord?.id === userId;
     
     const [showForm, setShowForm] = useState(false);
     const [moveInDate, setMoveInDate] = useState('');
@@ -66,15 +73,43 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
             setMessage('');
             setErrors([]);
             
-            alert('Your inquiry has been sent to the owner!');
+            showToast('Your inquiry has been sent to the owner!', 'success');
         } else {
             setErrors([response.error || 'Something went wrong']);
         }
     };
 
+    // If user is the owner, show owner view
+    if (isOwner) {
+        return (
+            <aside className="mt-6 p-6 col-span-2 rounded-xl border border-gray-300 shadow-xl">
+                <h2 className="mb-5 text-2xl font-semibold text-center">Rs {property.price_per_month.toLocaleString()} per month</h2>
+                
+                <div className="text-center p-4 bg-blue-50 rounded-xl">
+                    <p className="text-gray-700 font-medium">This is your property</p>
+                    <p className="text-gray-500 text-sm mt-2">
+                        You'll receive notifications when tenants send inquiries
+                    </p>
+                </div>
+                
+                <hr className="my-5" />
+                
+                <h3 className="font-bold mb-3">Property Details</h3>
+                <div className="flex justify-between py-2 border-b">
+                    <span className="text-gray-600">Security Deposit</span>
+                    <span className="font-medium">Rs {(property.price_per_month * 2).toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between py-2">
+                    <span className="text-gray-600">Advance Payment</span>
+                    <span className="font-medium">1 month rent</span>
+                </div>
+            </aside>
+        );
+    }
+
     return (
         <aside className="mt-6 p-6 col-span-2 rounded-xl border border-gray-300 shadow-xl">
-            <h2 className="mb-5 text-2xl font-semibold"> Rs {property.price_per_month.toLocaleString()} per month</h2>
+            <h2 className="mb-5 text-2xl font-semibold text-center"> Rs {property.price_per_month.toLocaleString()} per month</h2>
             
             <div className="mb-4 p-3 border border-gray-400 rounded-xl">
                 <label className="mb-2 block font-bold text-xs"> When are you moving? </label>

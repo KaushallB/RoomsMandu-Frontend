@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-export async function handleLogin(userId: string, accessToken:string, refreshToken:string){
+export async function handleLogin(userId: string, accessToken:string, refreshToken:string, userName?: string){
     const cookieStore = await cookies();
     
     cookieStore.set('session_userid', userId, {
@@ -25,6 +25,16 @@ export async function handleLogin(userId: string, accessToken:string, refreshTok
         maxAge: 60 * 60,
         path: '/'
     });
+
+    // Store user name
+    if (userName) {
+        cookieStore.set('session_username', userName, {
+            httpOnly: false,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 60 * 60 * 24 * 7,
+            path: '/'
+        });
+    }
     
 }
 
@@ -34,6 +44,7 @@ export async function resetAuthCookies(){
     cookieStore.set('session_userid', '');
     cookieStore.set('session_access_token', '');
     cookieStore.set('session_refresh_token', '');
+    cookieStore.set('session_username', '');
 }
 
 //Getting Data
@@ -45,6 +56,7 @@ export async function getUserId(){
 }
 
 export async function getAccessToken(){
+    const cookieStore = await cookies();
     let accessToken = cookieStore.get('session_access_token')?.value;
 
     if (!accessToken) {
@@ -55,11 +67,20 @@ export async function getAccessToken(){
 }
 
 export async function getUserName(){
+    const cookieStore = await cookies();
+    
+    // First try to get from cookie (fastest)
+    const storedName = cookieStore.get('session_username')?.value;
+    if (storedName) {
+        return storedName;
+    }
+    
+    // Fallback: fetch from API
     const userId = await getUserId();
     if (!userId) return null;
     
     try {
-        const token = (await cookies()).get('session_access_token')?.value;
+        const token = cookieStore.get('session_access_token')?.value;
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/auth/me/`, {
             headers: {
                 'Authorization': `Bearer ${token}`

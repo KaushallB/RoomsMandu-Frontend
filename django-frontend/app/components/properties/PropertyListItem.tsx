@@ -33,6 +33,15 @@ const PropertyListItem: React.FC<PropertyProps> = ({
                 className="hover:scale-110 object-cover transition h-full w-full" 
             />
 
+            {/* Availability Badge */}
+            <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold ${
+                property.is_available 
+                    ? 'bg-green-500 text-white' 
+                    : 'bg-red-500 text-white'
+            }`}>
+                {property.is_available ? 'Available' : 'Rented'}
+            </div>
+
             {userId && (
                 <FavouriteButton 
                     id={property.id}
@@ -44,10 +53,13 @@ const PropertyListItem: React.FC<PropertyProps> = ({
 
         <div className="mt-2">
             <p className="text-lg font-bold"> {property.title} </p>
+            <p className="mt-2 text-sm text-gray-500"><strong> {property.price_per_month} </strong> per month  </p>
         </div>
 
         <div className="mt-2">
-            <p className="text-sm text-gray-500"><strong> {property.price_per_month} </strong> per month  </p>
+            <p className="text-sm text-gray-500 flex items-center gap-1">
+                {property.address}, {property.district}
+            </p>
         </div>
 
 

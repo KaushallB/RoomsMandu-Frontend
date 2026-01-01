@@ -36,12 +36,14 @@ const SignupModal = () => {
             console.log('Signup response:', response);
 
             if (response.access) {
-                //handle login
-                handleLogin(response.user.pk, response.access, response.refresh);
+                //handle login - pass the full name (first + last)
+                const fullName = `${firstName} ${lastName}`.trim();
+                await handleLogin(response.user.pk, response.access, response.refresh, fullName);
 
                 signupModal.close();
                 
-                router.push('/');
+                // Hard refresh to update all components
+                window.location.href = '/';
             } else {
                 const tmpErrors: string[] = [];
                 Object.keys(response).forEach((key) => {

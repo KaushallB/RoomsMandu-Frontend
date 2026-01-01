@@ -26,11 +26,12 @@ const LoginModal = () => {
             const response = await apiService.post('/api/v1/auth/login/', formData);
 
             if (response.access) {
-                handleLogin(response.user.pk, response.access, response.refresh);
+                await handleLogin(response.user.pk, response.access, response.refresh, response.user.name);
 
                 loginModal.close();
 
-                router.push('/');
+                // Hard refresh to update all components
+                window.location.href = '/';
             } else {
                 setErrors(response.non_field_errors || ['Login failed']);
             }

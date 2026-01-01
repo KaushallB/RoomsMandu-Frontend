@@ -35,12 +35,12 @@ const Modal: React.FC<ModalProps> = ({
 
 
     return (
-        <div className="flex items-center justify-center fixed inset-0 z-40 bg-black/60">
-            <div className="relative w-[90%] md:w-[80%] lg:w-[700px] my-6 h-auto">
+        <div className="flex items-center justify-center fixed inset-0 z-40 bg-black/60 p-4 overflow-y-auto">
+            <div className="relative w-[90%] md:w-[80%] lg:w-[700px] my-6 max-h-[90vh]">
                 <div className={` translate duration-600 h-full ${showModal ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-10'}`}>
-                    <div className="w-full h-auto rounded-xl relative flex flex-col bg-white">
+                    <div className="w-full h-auto rounded-xl relative flex flex-col bg-white max-h-[90vh] overflow-hidden">
                     
-                        <header className="flex h-[60px] items-center p-6 rounded-t justify-center relative border-b">
+                        <header className="flex h-[60px] items-center p-6 rounded-t justify-center relative border-b flex-shrink-0">
                             <div 
                                 onClick={handleClose}
                                 className="p-3 absolute left-3 hover:bg-gray-300 rounded-full cursor-pointer">
@@ -52,7 +52,7 @@ const Modal: React.FC<ModalProps> = ({
                         <h2 className="text-lg font-bold">{label}</h2>
                         </header>
 
-                        <section className="p-6">
+                        <section className="p-6 overflow-y-auto">
                             {content}
                         </section>
                     </div>

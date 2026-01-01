@@ -27,7 +27,6 @@ const ConversationPage = ({params}: {params: Promise<{id: string}>}) => {
 
             if (id && id !== 'undefined') {
                 const response = await apiService.get(`/api/v1/chat/${id}/`);
-                console.log('Conversation response:', response);
                 setConversation(response.conversation || response);
             }
         };

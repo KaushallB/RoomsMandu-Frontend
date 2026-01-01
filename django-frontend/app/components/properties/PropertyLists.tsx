@@ -14,6 +14,9 @@ export type PropertyType = {
     price_per_month: number;
     image_url: string;
     is_favourite: boolean;
+    district: string;
+    address: string;
+    is_available: boolean;
 }
 
 interface PropertyListProps {
@@ -125,7 +128,7 @@ const PropertyList: React.FC<PropertyListProps> = ({
                 <PropertyListItem 
                     key={property.id}
                     property={property}
-                    markFav={(is_favourite: any) => markFav(property.id, is_favourite)}                    userId={userId}                />
+                    markFav={(is_favourite: any) => markFav(property.id, is_favourite)}  userId={userId}/>
             )
         })}
         </>

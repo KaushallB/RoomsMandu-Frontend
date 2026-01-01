@@ -24,6 +24,10 @@ const AddPropertyModal = () => {
     const [dataKitchen, setdataKitchen] = useState('');
     const [dataDistrict, setdataDistrict] = useState<SelectDistrictValue>();
     const [dataImage, setdataImage] = useState< File | null >(null);
+    const [dataAddress, setdataAddress] = useState('');
+    const [dataLatitude, setdataLatitude] = useState('');
+    const [dataLongitude, setdataLongitude] = useState('');
+    const [gettingLocation, setGettingLocation] = useState(false);
     const [errors, setErrors] = useState<string[]>([]);
 
 
@@ -42,6 +46,28 @@ const AddPropertyModal = () => {
             setdataImage(tmpImage);
         }
     }
+
+    // Get current location using browser GPS
+    const getMyLocation = () => {
+        if (!navigator.geolocation) {
+            alert('Geolocation is not supported by your browser');
+            return;
+        }
+
+        setGettingLocation(true);
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                // Round to 6 decimal places (about 10cm accuracy, fits in DB)
+                setdataLatitude(position.coords.latitude.toFixed(6));
+                setdataLongitude(position.coords.longitude.toFixed(6));
+                setGettingLocation(false);
+            },
+            (error) => {
+                alert('Unable to get location. Please enter manually or try again.');
+                setGettingLocation(false);
+            }
+        );
+    };
 
     //Submit
 
@@ -66,6 +92,11 @@ const AddPropertyModal = () => {
             formData.append('kitchen', dataKitchen);
             formData.append('district', dataDistrict.value);
             formData.append('image', dataImage);
+            
+            // Add location fields
+            if (dataAddress) formData.append('address', dataAddress);
+            if (dataLatitude) formData.append('latitude', dataLatitude);
+            if (dataLongitude) formData.append('longitude', dataLongitude);
 
             const response = await apiService.post('/api/v1/properties/create/', formData);
             
@@ -90,6 +121,9 @@ const AddPropertyModal = () => {
                 setdataKitchen('');
                 setdataDistrict(undefined);
                 setdataImage(null);
+                setdataAddress('');
+                setdataLatitude('');
+                setdataLongitude('');
             } else {
                 console.error('Error creating property:', response);
 
@@ -247,7 +281,55 @@ const AddPropertyModal = () => {
                     <SelectDistrict 
                         value = {dataDistrict}
                         onChange={(value) => setdataDistrict(value as SelectDistrictValue)}
+                    />
+
+                    <div className='flex flex-col space-y-2'>
+                        <label>Full Address</label>
+                        <input 
+                            type='text'
+                            value={dataAddress}
+                            onChange={(e) => setdataAddress(e.target.value)}
+                            placeholder='Street name, Landmark, Area...'
+                            className='w-full p-4 border border-gray-600 rounded-xl'
                         />
+                    </div>
+
+                    {/* GPS Location */}
+                    <div className='p-4 bg-gray-50 rounded-xl space-y-3'>
+                        <p className='text-sm text-gray-600'>📍 Add GPS location </p>
+                        
+                        <button
+                            type='button'
+                            onClick={getMyLocation}
+                            disabled={gettingLocation}
+                            className='w-full py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium disabled:opacity-50'
+                        >
+                            {gettingLocation ? 'Getting Location...' : '📍 Get My Current Location'}
+                        </button>
+
+                        {(dataLatitude && dataLongitude) && (
+                            <div className='text-sm text-green-600 text-center'>
+                                Location captured! ({parseFloat(dataLatitude).toFixed(4)}, {parseFloat(dataLongitude).toFixed(4)})
+                            </div>
+                        )}
+
+                        <div className='grid grid-cols-2 gap-2'>
+                            <input 
+                                type='text'
+                                value={dataLatitude}
+                                onChange={(e) => setdataLatitude(e.target.value)}
+                                placeholder='Latitude'
+                                className='p-2 border rounded-lg text-sm'
+                            />
+                            <input 
+                                type='text'
+                                value={dataLongitude}
+                                onChange={(e) => setdataLongitude(e.target.value)}
+                                placeholder='Longitude'
+                                className='p-2 border rounded-lg text-sm'
+                            />
+                        </div>
+                    </div>
 
                 </div>
 
