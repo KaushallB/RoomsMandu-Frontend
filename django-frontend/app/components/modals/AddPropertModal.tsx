@@ -9,6 +9,7 @@ import SelectDistrict, { SelectDistrictValue } from '../forms/selectDistrict';
 import Image from 'next/image';
 import apiService from '@/app/services/apiService';
 import {useRouter} from 'next/navigation';
+import { MapPinIcon } from '@heroicons/react/24/outline';
 
 const AddPropertyModal = () => {
     const addPropertymodal = useAddPropertyModal();
@@ -296,15 +297,19 @@ const AddPropertyModal = () => {
 
                     {/* GPS Location */}
                     <div className='p-4 bg-gray-50 rounded-xl space-y-3'>
-                        <p className='text-sm text-gray-600'>📍 Add GPS location </p>
+                        <p className='text-sm text-gray-600 flex items-center gap-2'>
+                            <MapPinIcon className='w-4 h-4' />
+                            Add GPS location
+                        </p>
                         
                         <button
                             type='button'
                             onClick={getMyLocation}
                             disabled={gettingLocation}
-                            className='w-full py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium disabled:opacity-50'
+                            className='w-full py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium disabled:opacity-50 flex items-center justify-center gap-2'
                         >
-                            {gettingLocation ? 'Getting Location...' : '📍 Get My Current Location'}
+                            <MapPinIcon className='w-5 h-5' />
+                            {gettingLocation ? 'Getting Location...' : 'Get My Current Location'}
                         </button>
 
                         {(dataLatitude && dataLongitude) && (

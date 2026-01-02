@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import apiService from '../services/apiService';
 import { getUserId } from '../lib/actions';
+import { UserIcon, PhoneIcon, CalendarIcon, UsersIcon } from '@heroicons/react/24/outline';
 
 type InquiryType = {
     id: string;
@@ -138,28 +139,28 @@ const MyInquiriesPage = () => {
                                     {/* Tenant Info */}
                                     <div className="mt-3 p-3 bg-gray-50 rounded-lg">
                                         <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-lg">👤</span>
+                                            <UserIcon className="w-5 h-5 text-gray-600" />
                                             <span className="font-medium">{inquiry.full_name}</span>
                                         </div>
                                         
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-600">
                                             <div className="flex items-center gap-2">
-                                                <span>📞</span>
+                                                <PhoneIcon className="w-4 h-4" />
                                                 <a href={`tel:${inquiry.phone_number}`} className="text-blue-600 hover:underline">
                                                     {inquiry.phone_number}
                                                 </a>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <span>📅</span>
+                                                <CalendarIcon className="w-4 h-4" />
                                                 <span>{getMoveInLabel(inquiry.move_in_preference)}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <span>👥</span>
+                                                <UsersIcon className="w-4 h-4" />
                                                 <span>{inquiry.num_occupants} occupant(s)</span>
                                             </div>
                                             {inquiry.preferred_move_in_date && (
                                                 <div className="flex items-center gap-2">
-                                                    <span>🗓️</span>
+                                                    <CalendarIcon className="w-4 h-4" />
                                                     <span>Preferred: {inquiry.preferred_move_in_date}</span>
                                                 </div>
                                             )}
