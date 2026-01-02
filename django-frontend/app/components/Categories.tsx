@@ -19,7 +19,7 @@ const Categories = () => {
             budget: searchModal.query.budget,
             rooms: searchModal.query.rooms,
             kitchen: searchModal.query.kitchen,
-            bathrooms: searchModal.query.bathroom
+            bathroom: searchModal.query.bathroom
         };
 
         searchModal.setQuery(query);
