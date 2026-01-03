@@ -2,7 +2,11 @@
 
 import { cookies } from "next/headers";
 
-type ServerCookieInit = CookieInit & { httpOnly?: boolean };
+type ServerCookieInit = CookieInit & {
+    httpOnly?: boolean;
+    secure?: boolean;
+    maxAge?: number;
+};
 
 export async function handleLogin(userId: string, accessToken:string, refreshToken:string, userName?: string){
     const cookieStore = await cookies();
