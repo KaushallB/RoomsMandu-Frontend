@@ -17,8 +17,8 @@ export type MessageType = {
 
 const ConversationPage = ({params}: {params: Promise<{id: string}>}) => {
     const {id} = use(params);
-    const [userId, setUserId] = useState('');
-    const [conversation, setConversation] = useState(null);
+    const [userId, setUserId] = useState<string | null>(null);
+    const [conversation, setConversation] = useState<any>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -45,7 +45,7 @@ const ConversationPage = ({params}: {params: Promise<{id: string}>}) => {
         <main className="max-w-[1500px] mx-auto px-6 pb-6">
             {conversation && (
                 <ConversationDetail 
-                    userId={userId}
+                    userId={userId || ''}
                     conversation={conversation}
                     conversationId={id}
                     messages={conversation.messages}
