@@ -78,7 +78,7 @@ const LoginModal = () => {
                 
                 <CustomButton
                     label="Login"
-                    onClick={(e) => { e.preventDefault(); submitLogin(); }}
+                    onClick={() => { submitLogin(); }}
                 />
             </form>
         </>
