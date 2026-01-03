@@ -10,7 +10,7 @@ type ServerCookieInit = CookieInit & {
 
 export async function handleLogin(userId: string, accessToken:string, refreshToken:string, userName?: string){
     const cookieStore = await cookies();
-    const baseCookie: ServerCookieInit = {
+    const baseCookie: Omit<ServerCookieInit, 'name' | 'value'> = {
         maxAge: 60 * 60 * 24 * 7,
         path: '/',
         sameSite: 'lax'
