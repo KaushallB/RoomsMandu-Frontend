@@ -14,7 +14,7 @@ const CallNotification = () => {
     const [incomingCall, setIncomingCall] = useState<IncomingCall | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
     const wsRef = useRef<WebSocket | null>(null);
-    const audioRef = useRef<HTMLAudioElement | null>(null);
+    const ringtoneIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         const init = async () => {
@@ -61,37 +61,30 @@ const CallNotification = () => {
     }, []);
 
     const playRingtone = () => {
-        // Create a simple ringtone using Web Audio API
         try {
             const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-            
             const playBeep = () => {
                 const oscillator = audioContext.createOscillator();
                 const gainNode = audioContext.createGain();
-                
                 oscillator.connect(gainNode);
                 gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.value = 440; // A4 note
+                oscillator.frequency.value = 440;
                 oscillator.type = 'sine';
                 gainNode.gain.value = 0.3;
-                
                 oscillator.start();
                 oscillator.stop(audioContext.currentTime + 0.2);
             };
-            
-            // Play beep pattern
             playBeep();
-            const interval = setInterval(playBeep, 500);
-            audioRef.current = { stop: () => clearInterval(interval) } as any;
+            ringtoneIntervalRef.current = setInterval(playBeep, 500);
         } catch (e) {
             console.log('Audio not supported');
         }
     };
 
     const stopRingtone = () => {
-        if (audioRef.current && audioRef.current.stop) {
-            audioRef.current.stop();
+        if (ringtoneIntervalRef.current) {
+            clearInterval(ringtoneIntervalRef.current);
+            ringtoneIntervalRef.current = null;
         }
     };
 
