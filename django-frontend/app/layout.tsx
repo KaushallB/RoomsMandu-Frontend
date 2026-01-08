@@ -36,11 +36,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const contents = (
-        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, temporibus iste iure quae minima hic nostrum voluptatum aliquam veritatis ut saepe asperiores amet soluta minus voluptatem dolorem quibusdam ullam commodi.</p>
-    )
+    <p>
+      Welcome to RoomsMandu! Your trusted platform for finding and listing rooms, flats, and properties in Nepal. Enjoy a seamless renting experience with verified listings, easy inquiries, and secure communication between landlords and tenants.
+    </p>
+  )
   return (
     <html lang="en">
       <head>
+        {/* Favicon */}
+        <link rel="icon" type="image/png" href="/1.png" />
         {/* Google Translate Widget */}
         <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
         <script
