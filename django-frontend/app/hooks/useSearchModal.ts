@@ -27,8 +27,8 @@ const useSearchModal = create<SearchModalStore>((set) => ({
     setQuery: (query: SearchQuery) => set({query: query}),
     query: {
         district: '',
-        category: null,
-        budget: null,
+        category: '',
+        budget: '',
         rooms: 0,
         bathroom: 0,
         kitchen: 0
