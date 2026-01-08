@@ -12,11 +12,24 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+/* Force light mode regardless of OS/browser */
+html, body {
+  color-scheme: light;
+  background: #fff !important;
+  color: #171717 !important;
+}
+
+/* Modal and form fields: force light background and dark text */
+.modal, .modal * {
+  background: #fff !important;
+  color: #171717 !important;
+}
+
+input, textarea, select, button {
+  background: #fff !important;
+  color: #171717 !important;
+  border-color: #171717 !important;
 }
 
 body {
