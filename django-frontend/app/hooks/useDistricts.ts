@@ -15,7 +15,7 @@ const useDistricts = () => {
                 value: districtName
             }));
         } catch (error) {
-            console.error('Error loading districts:', error);
+            // console.error('Error loading districts:', error);
             return [];
         }
     };
@@ -29,7 +29,7 @@ const useDistricts = () => {
                 value: districtName
             }));
         } catch (error) {
-            console.error('Error loading districts by province:', error);
+            // console.error('Error loading districts by province:', error);
             return [];
         }
     };

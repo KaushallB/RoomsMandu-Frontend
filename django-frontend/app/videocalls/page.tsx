@@ -31,7 +31,7 @@ export default function VideoCallsPage() {
                 // Make sure response is an array
                 setCalls(Array.isArray(response) ? response : []);
             } catch (error) {
-                console.error('Error fetching video calls:', error);
+                // console.error('Error fetching video calls:', error);
                 setCalls([]);
             } finally {
                 setLoading(false);
@@ -49,7 +49,7 @@ export default function VideoCallsPage() {
             setCalls(Array.isArray(response) ? response : []);
             showToast('Video call confirmed!', 'success');
         } catch (error) {
-            console.error('Error confirming call:', error);
+            // console.error('Error confirming call:', error);
             showToast('Failed to confirm call', 'error');
         }
     };

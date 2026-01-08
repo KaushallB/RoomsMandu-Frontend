@@ -77,7 +77,7 @@ const CallNotification = () => {
             playBeep();
             ringtoneIntervalRef.current = setInterval(playBeep, 500);
         } catch (e) {
-            console.log('Audio not supported');
+            // console.log('Audio not supported');
         }
     };
 

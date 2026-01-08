@@ -42,7 +42,7 @@ const MyInquiriesPage = () => {
                 const response = await apiService.get('/api/v1/properties/inquiries/');
                 setInquiries(response.data || []);
             } catch (error) {
-                console.error('Error fetching inquiries:', error);
+                // console.error('Error fetching inquiries:', error);
             } finally {
                 setLoading(false);
             }

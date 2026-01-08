@@ -108,12 +108,12 @@ const PropertyList: React.FC<PropertyListProps> = ({
     //     })
     //         .then(response => response.json())
     //         .then ((json) => {
-    //             console.log('json',json);
+    //
 
     //             setProperties(json.data)
     //         })
     //         .catch((error) => {
-    //             console.log('error:',error);
+    //
     //         })
     // };
 

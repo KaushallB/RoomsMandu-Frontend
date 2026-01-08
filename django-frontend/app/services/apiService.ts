@@ -16,10 +16,10 @@ function getTokenFromCookies(): string | null {
 const apiService= {
 
     get: async function (url:string): Promise<any> {
-        console.log('get', url);
+        // console.log('get', url);
 
         const token = getTokenFromCookies();
-        console.log('Token found:', token ? 'Yes' : 'No');
+        // console.log('Token found:', token ? 'Yes' : 'No');
 
         return new Promise((resolve, reject) => {
             fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`,{
@@ -32,7 +32,7 @@ const apiService= {
             })
                 .then(response => response.json())
                 .then((json) => {
-                    console.log('Response', json);
+                    // console.log('Response', json);
 
                     resolve(json);
                 })
@@ -43,11 +43,11 @@ const apiService= {
     },
 
     post: async function(url:string, data:any): Promise<any> {
-        console.log('POST', url, data);
+        // console.log('POST', url, data);
 
         const token = getTokenFromCookies();
-        console.log('Token found:', token ? 'Yes' : 'No');
-        console.log('Token value:', token);
+        // console.log('Token found:', token ? 'Yes' : 'No');
+        // console.log('Token value:', token);
         
         // Check if data is FormData
         const isFormData = data instanceof FormData;
@@ -74,8 +74,8 @@ const apiService= {
             })
                 .then(async (response) => {
                     const text = await response.text();
-                    console.log('Response status:', response.status);
-                    console.log('Response text:', text);
+                    // console.log('Response status:', response.status);
+                    // console.log('Response text:', text);
                     
                     let json;
                     try {
@@ -84,18 +84,18 @@ const apiService= {
                         json = { error: text };
                     }
                     
-                    console.log('Parsed JSON:', json);
+                    // console.log('Parsed JSON:', json);
                     resolve(json);
                 })
                 .catch((error) => {
-                    console.error('Fetch error:', error);
+                    // console.error('Fetch error:', error);
                     reject(error);
                 })
         })
     },
 
     put: async function(url:string, data:any): Promise<any> {
-        console.log('PUT', url, data);
+        // console.log('PUT', url, data);
 
         const token = getTokenFromCookies();
         
@@ -139,7 +139,7 @@ const apiService= {
     },
 
     delete: async function(url:string): Promise<any> {
-        console.log('DELETE', url);
+        // console.log('DELETE', url);
 
         const token = getTokenFromCookies();
         

@@ -92,14 +92,14 @@ export async function getUserName(){
             return data.name || null;
         }
     } catch (error) {
-        console.error('Error fetching user name:', error);
+        // console.error('Error fetching user name:', error);
     }
     
     return null;
 }
 
 export async function handleRefresh(){
-    console.log('Handle Refresh');
+    // console.log('Handle Refresh');
 
     const refreshToken=await getRefreshToken();
 
@@ -115,7 +115,7 @@ export async function handleRefresh(){
     })
         .then(response => response.json())
         .then((json) => {
-            console.log('Response-Refresh', json)
+            // console.log('Response-Refresh', json)
 
 
             if(json.access){
@@ -127,7 +127,7 @@ export async function handleRefresh(){
             }
         })
         .catch((error) => {
-            console.log('error', error);
+            // console.log('error', error);
 
             resetAuthCookies();
         }) 

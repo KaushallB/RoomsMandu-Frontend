@@ -22,7 +22,7 @@ const LandlordDetailsPage = ({params}: {params: Promise<{id:string}>}) => {
                 setLandlord(landlordData);
                 setUserId(user);
             } catch (error) {
-                console.error('Error fetching landlord:', error);
+                // console.error('Error fetching landlord:', error);
             } finally {
                 setLoading(false);
             }

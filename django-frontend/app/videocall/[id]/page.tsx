@@ -19,7 +19,7 @@ export default function VideoCallRoom({ params }: { params: Promise<{ id: string
                 const response = await apiService.get(`/api/v1/properties/video-calls/${id}/`);
                 setCall(response);
             } catch (error) {
-                console.error('Error fetching call:', error);
+                // console.error('Error fetching call:', error);
             } finally {
                 setLoading(false);
             }

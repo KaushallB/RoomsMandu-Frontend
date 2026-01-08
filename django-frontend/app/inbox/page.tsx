@@ -31,7 +31,7 @@ const InboxPage = () => {
                     const response = await apiService.get('/api/v1/chat/')
                     setConversations(Array.isArray(response) ? response : (response?.data || []));
                 } catch (error) {
-                    console.error('Failed to fetch conversations:', error);
+                    // console.error('Failed to fetch conversations:', error);
                 }
             }
         };

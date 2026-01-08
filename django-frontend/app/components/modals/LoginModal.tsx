@@ -36,7 +36,7 @@ const LoginModal = () => {
                 setErrors(response.non_field_errors || ['Login failed']);
             }
         } catch (error) {
-            console.error('Login error:', error);
+            // console.error('Login error:', error);
             setErrors(['Login failed. Please try again.']);
         }
     }

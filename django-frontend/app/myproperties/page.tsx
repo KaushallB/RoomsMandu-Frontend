@@ -63,7 +63,7 @@ const MyPropertiespage = () => {
         e.stopPropagation();
         try {
             const response = await apiService.post(`/api/v1/properties/${propertyId}/toggle_availability/`, {});
-            console.log('Toggle response:', response);
+            // console.log('Toggle response:', response);
             if (response.success) {
                 setProperties(properties.map(p => 
                     p.id === propertyId ? { ...p, is_available: response.is_available } : p
@@ -76,7 +76,7 @@ const MyPropertiespage = () => {
                 showToast('Failed to update status', 'error');
             }
         } catch (error) {
-            console.error('Toggle error:', error);
+            // console.error('Toggle error:', error);
             showToast('Failed to update status', 'error');
         }
     };

@@ -26,7 +26,7 @@ const PropertyDetails = ({params}: {params: Promise<{id: string}>}) => {
                 setProperty(data);
                 setUserId(user);
             } catch (error) {
-                console.error('Error fetching property:', error);
+                // console.error('Error fetching property:', error);
             } finally {
                 setLoading(false);
             }

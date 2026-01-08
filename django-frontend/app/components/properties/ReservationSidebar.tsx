@@ -61,7 +61,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
         const response = await apiService.post(`/api/v1/properties/${property.id}/book/`, formData);
 
         if (response.success) {
-            console.log('Booking successful');
+            // console.log('Booking successful');
             
             // Reset form
             setShowForm(false);

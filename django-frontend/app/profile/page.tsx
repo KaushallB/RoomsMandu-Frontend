@@ -39,7 +39,7 @@ const ProfilePage = () => {
                 setName(data.name || '');
                 setPhone(data.phone_number || '');
             } catch (error) {
-                console.error('Error fetching profile:', error);
+                // console.error('Error fetching profile:', error);
             } finally {
                 setLoading(false);
             }
@@ -78,7 +78,7 @@ const ProfilePage = () => {
                 setAvatarPreview(null);
             }
         } catch (error) {
-            console.error('Error updating profile:', error);
+            // console.error('Error updating profile:', error);
             setMessage('Failed to update profile');
         } finally {
             setSaving(false);
