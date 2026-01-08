@@ -30,7 +30,7 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({
     
     const myuser = conversation.users?.find((user) => user.id == userId )
     const otherUser = conversation.users?.find((user) => user.id != userId )
-    const messageDiv = useRef(null);
+    const messageDiv = useRef<HTMLDivElement>(null);
     const [realtimeMsg, setrealtimeMsg] = useState<MessageType[]>([]);
 
     const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(`ws://127.0.0.1:8000/ws/${conversationId}/`,{
