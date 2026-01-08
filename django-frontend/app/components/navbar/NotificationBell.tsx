@@ -23,20 +23,6 @@ const NotificationBell = () => {
 
     const unreadCount = notifications.filter(n => !n.read).length;
 
-    useEffect(() => {
-        const init = async () => {
-            const uid = await getUserId();
-            setUserId(uid);
-            
-            if (uid) {
-                // Load current notifications
-                setNotifications(getNotifications());
-
-                // Connect to notification WebSocket
-                const ws = new WebSocket(`ws://localhost:8000/ws/notifications/${uid}/`);
-                wsRef.current = ws;
-
-                ws.onopen = () => {
     // Connect to WebSocket for real-time notifications
     useEffect(() => {
         const init = async () => {
@@ -44,11 +30,11 @@ const NotificationBell = () => {
             setUserId(uid);
 
             if (uid) {
-                // Load current notifications
+                // Load stored notifications
                 setNotifications(getNotifications());
 
-                // Use NEXT_PUBLIC_WS_HOST from env, fallback to localhost for dev
-                const wsBase = process.env.NEXT_PUBLIC_WS_HOST || 'ws://localhost:8000/ws';
+                const wsBase =
+                    process.env.NEXT_PUBLIC_WS_HOST || 'ws://localhost:8000/ws';
                 const ws = new WebSocket(`${wsBase}/notifications/${uid}/`);
                 wsRef.current = ws;
 
@@ -59,12 +45,10 @@ const NotificationBell = () => {
                 ws.onmessage = (event) => {
                     const data = JSON.parse(event.data);
                     console.log('Notification received:', data);
-                    
-                    // Add to notification list with URL
+
                     addNotification(data.message, data.url);
                     setNotifications(getNotifications());
-                    
-                    // Show toast popup
+
                     showToast(data.message, data.type || 'info', data.url);
                 };
 
@@ -76,7 +60,6 @@ const NotificationBell = () => {
 
         init();
 
-        // Subscribe to notification changes (from Toast.tsx storage)
         const unsubscribe = subscribeNotifications(() => {
             setNotifications(getNotifications());
         });
