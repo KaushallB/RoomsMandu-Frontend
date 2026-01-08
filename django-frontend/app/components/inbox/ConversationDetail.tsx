@@ -44,32 +44,32 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({
             const event = (lastJsonMessage as any).event;
             
             // Handle call events
-            if (event === 'call_request' && lastJsonMessage.caller_id !== userId) {
+            if (event === 'call_request' && (lastJsonMessage as any).caller_id !== userId) {
                 // Someone is calling me
                 setCallState('incoming');
                 setIncomingCall({
-                    callerName: lastJsonMessage.caller_name as string,
-                    roomName: lastJsonMessage.room_name as string,
-                    jitsiUrl: lastJsonMessage.jitsi_url as string
+                    callerName: (lastJsonMessage as any).caller_name as string,
+                    roomName: (lastJsonMessage as any).room_name as string,
+                    jitsiUrl: (lastJsonMessage as any).jitsi_url as string
                 });
             } else if (event === 'call_accepted') {
                 // Call was accepted - open the call
                 setCallState('in-call');
-                window.open(lastJsonMessage.jitsi_url as string, '_blank');
+                window.open((lastJsonMessage as any).jitsi_url as string, '_blank');
                 setTimeout(() => setCallState('idle'), 1000);
             } else if (event === 'call_declined') {
                 // Call was declined
                 setCallState('idle');
                 setIncomingCall(null);
-            } else if (event === 'typing' && lastJsonMessage.user_id !== userId) {
+            } else if (event === 'typing' && (lastJsonMessage as any).user_id !== userId) {
                 // Only show typing if it's from the other user
                 setIsTyping(true);
                 setTimeout(() => setIsTyping(false), 3000);
             } else if ('name' in lastJsonMessage && 'body' in lastJsonMessage && !event){
                 const messages: MessageType = {
                     id: '',
-                    name: lastJsonMessage.name as string,
-                    body: lastJsonMessage.body as string,
+                    name: (lastJsonMessage as any).name as string,
+                    body: (lastJsonMessage as any).body as string,
                     sent_to: otherUser as UserType,
                     created_by: myuser as UserType,
                     conversationId: conversationId
