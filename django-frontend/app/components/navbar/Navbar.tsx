@@ -28,7 +28,7 @@ const Navbar = () => {
             <div className="max-w-[1500px] mx-auto px-6">
                 <div className="flex justify-between items-center">
                     <Link href="/">
-                        <Image src="/logo.png"
+                        <Image src="/3.png"
                             alt="roomsmandulogo"
                             width={200}
                             height={50}
