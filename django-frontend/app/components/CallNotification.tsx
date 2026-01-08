@@ -95,6 +95,8 @@ const CallNotification = () => {
             JSON.stringify({
                 event: 'call_accepted',
                 conversation_id: incomingCall.conversationId,
+                jitsi_url: incomingCall.jitsiUrl,
+                room_name: incomingCall.roomName
             })
         );
 
