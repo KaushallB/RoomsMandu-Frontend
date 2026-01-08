@@ -66,7 +66,7 @@ export default function RootLayout({
         <Navbar />
 
         <div className="pt-45">
-        {children}
+          {children}
         </div>
 
         <LoginModal />
@@ -76,6 +76,10 @@ export default function RootLayout({
         <VideoCallModal />
         <CallNotification />
         <ToastContainer />
+
+        <footer className="w-full text-center py-4 text-gray-500 text-sm border-t mt-8">
+          Developed by Kaushal@2025
+        </footer>
 
         {/* <Modal 
           label="Modal Test"
