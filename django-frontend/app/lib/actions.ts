@@ -137,8 +137,8 @@ export async function handleRefresh(){
 
 
 export async function getRefreshToken(){
-    let refreshToken = cookieStore.get('session_refresh_token')?.value;
-    return refreshToken;
+    const item = await cookieStore.get('session_refresh_token');
+    return item ? item.value : null;
 }
 
 
