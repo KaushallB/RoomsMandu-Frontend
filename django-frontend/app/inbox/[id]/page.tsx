@@ -23,7 +23,7 @@ const ConversationPage = ({params}: {params: Promise<{id: string}>}) => {
     useEffect(() => {
         const fetchData = async () => {
             const uid = await getUserId();
-            setUserId(uid);
+            setUserId(uid ?? '');
 
             if (id && id !== 'undefined') {
                 const response = await apiService.get(`/api/v1/chat/${id}/`);
