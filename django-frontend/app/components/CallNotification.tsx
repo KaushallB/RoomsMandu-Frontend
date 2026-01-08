@@ -16,7 +16,6 @@ const CallNotification = () => {
     const wsRef = useRef<WebSocket | null>(null);
     const ringtoneIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-    useEffect(() => {
         const init = async () => {
             const uid = await getUserId();
             setUserId(uid);
@@ -33,6 +32,27 @@ const CallNotification = () => {
                         // Play ringtone
                         playRingtone();
                         
+                        setIncomingCall({
+                            callerName: data.caller_name,
+                            roomName: data.room_name,
+                            jitsiUrl: data.jitsi_url,
+                            conversationId: data.conversation_id
+    useEffect(() => {
+        const init = async () => {
+            const uid = await getUserId();
+            setUserId(uid);
+
+            if (uid) {
+                // Use NEXT_PUBLIC_WS_HOST from env, fallback to localhost for dev
+                const wsBase = process.env.NEXT_PUBLIC_WS_HOST || 'ws://localhost:8000/ws';
+                const ws = new WebSocket(`${wsBase}/calls/${uid}/`);
+                wsRef.current = ws;
+
+                ws.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    if (data.event === 'incoming_call' && data.caller_id !== uid) {
+                        // Play ringtone
+                        playRingtone();
                         setIncomingCall({
                             callerName: data.caller_name,
                             roomName: data.room_name,

@@ -23,7 +23,6 @@ const NotificationBell = () => {
 
     const unreadCount = notifications.filter(n => !n.read).length;
 
-    // Connect to WebSocket for real-time notifications
     useEffect(() => {
         const init = async () => {
             const uid = await getUserId();
@@ -35,6 +34,22 @@ const NotificationBell = () => {
 
                 // Connect to notification WebSocket
                 const ws = new WebSocket(`ws://localhost:8000/ws/notifications/${uid}/`);
+                wsRef.current = ws;
+
+                ws.onopen = () => {
+    // Connect to WebSocket for real-time notifications
+    useEffect(() => {
+        const init = async () => {
+            const uid = await getUserId();
+            setUserId(uid);
+
+            if (uid) {
+                // Load current notifications
+                setNotifications(getNotifications());
+
+                // Use NEXT_PUBLIC_WS_HOST from env, fallback to localhost for dev
+                const wsBase = process.env.NEXT_PUBLIC_WS_HOST || 'ws://localhost:8000/ws';
+                const ws = new WebSocket(`${wsBase}/notifications/${uid}/`);
                 wsRef.current = ws;
 
                 ws.onopen = () => {
