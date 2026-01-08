@@ -14,10 +14,22 @@ const nextConfig: NextConfig = {
         hostname: '13.71.60.121',
         port: '1337',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'roomsmandu.qzz.io',
+        port: '',
+        pathname: '/media/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.roomsmandu.qzz.io',
+        port: '',
+        pathname: '/media/**'
       }
     ],
     dangerouslyAllowSVG: true,
-    unoptimized: true  // Allows localhost images during development
+    unoptimized: true
   },
   /* config options here */
 };
