@@ -1,10 +1,12 @@
 'use client';
 
+
 import React, {useState, useEffect, use} from 'react';
 import ConversationDetail from '@/app/components/inbox/ConversationDetail';
 import { getUserId } from '@/app/lib/actions';
 import apiService from '@/app/services/apiService';
 import { UserType } from '../page';
+import { MessageType } from './page';
 
 export type MessageType = {
     id: string;
@@ -15,10 +17,16 @@ export type MessageType = {
     created_by: UserType
 }
 
+type ConversationWithMessages = {
+    id: string;
+    users: UserType[];
+    messages: MessageType[];
+};
+
 const ConversationPage = ({params}: {params: Promise<{id: string}>}) => {
     const {id} = use(params);
     const [userId, setUserId] = useState('');
-    const [conversation, setConversation] = useState(null);
+    const [conversation, setConversation] = useState<ConversationWithMessages | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
