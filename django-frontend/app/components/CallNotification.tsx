@@ -12,68 +12,46 @@ interface IncomingCall {
 
 const CallNotification = () => {
     const [incomingCall, setIncomingCall] = useState<IncomingCall | null>(null);
-    const [userId, setUserId] = useState<string | null>(null);
     const wsRef = useRef<WebSocket | null>(null);
     const ringtoneIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-        const init = async () => {
-            const uid = await getUserId();
-            setUserId(uid);
-            
-            if (uid) {
-                // Connect to a global call notification WebSocket
-                const ws = new WebSocket(`ws://127.0.0.1:8000/ws/calls/${uid}/`);
-                wsRef.current = ws;
-                
-                ws.onmessage = (event) => {
-                    const data = JSON.parse(event.data);
-                    
-                    if (data.event === 'incoming_call' && data.caller_id !== uid) {
-                        // Play ringtone
-                        playRingtone();
-                        
-                        setIncomingCall({
-                            callerName: data.caller_name,
-                            roomName: data.room_name,
-                            jitsiUrl: data.jitsi_url,
-                            conversationId: data.conversation_id
     useEffect(() => {
         const init = async () => {
             const uid = await getUserId();
-            setUserId(uid);
+            if (!uid || wsRef.current) return;
 
-            if (uid) {
-                // Use NEXT_PUBLIC_WS_HOST from env, fallback to localhost for dev
-                const wsBase = process.env.NEXT_PUBLIC_WS_HOST || 'ws://localhost:8000/ws';
-                const ws = new WebSocket(`${wsBase}/calls/${uid}/`);
-                wsRef.current = ws;
+            const wsBase =
+                process.env.NEXT_PUBLIC_WS_HOST || 'ws://localhost:8000/ws';
+            const ws = new WebSocket(`${wsBase}/calls/${uid}/`);
+            wsRef.current = ws;
 
-                ws.onmessage = (event) => {
-                    const data = JSON.parse(event.data);
-                    if (data.event === 'incoming_call' && data.caller_id !== uid) {
-                        // Play ringtone
-                        playRingtone();
-                        setIncomingCall({
-                            callerName: data.caller_name,
-                            roomName: data.room_name,
-                            jitsiUrl: data.jitsi_url,
-                            conversationId: data.conversation_id
-                        });
-                    } else if (data.event === 'call_cancelled') {
-                        stopRingtone();
-                        setIncomingCall(null);
-                    }
-                };
-                
-                ws.onclose = () => {
-                    // Reconnect after 3 seconds
-                    setTimeout(init, 3000);
-                };
-            }
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+
+                if (data.event === 'incoming_call' && data.caller_id !== uid) {
+                    playRingtone();
+                    setIncomingCall({
+                        callerName: data.caller_name,
+                        roomName: data.room_name,
+                        jitsiUrl: data.jitsi_url,
+                        conversationId: data.conversation_id,
+                    });
+                }
+
+                if (data.event === 'call_cancelled') {
+                    stopRingtone();
+                    setIncomingCall(null);
+                }
+            };
+
+            ws.onclose = () => {
+                wsRef.current = null;
+                setTimeout(init, 3000);
+            };
         };
-        
+
         init();
-        
+
         return () => {
             wsRef.current?.close();
             stopRingtone();
@@ -82,7 +60,10 @@ const CallNotification = () => {
 
     const playRingtone = () => {
         try {
-            const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+            const audioContext =
+                new (window.AudioContext ||
+                    (window as any).webkitAudioContext)();
+
             const playBeep = () => {
                 const oscillator = audioContext.createOscillator();
                 const gainNode = audioContext.createGain();
@@ -94,11 +75,10 @@ const CallNotification = () => {
                 oscillator.start();
                 oscillator.stop(audioContext.currentTime + 0.2);
             };
+
             playBeep();
             ringtoneIntervalRef.current = setInterval(playBeep, 500);
-        } catch (e) {
-            // console.log('Audio not supported');
-        }
+        } catch {}
     };
 
     const stopRingtone = () => {
@@ -109,30 +89,32 @@ const CallNotification = () => {
     };
 
     const acceptCall = () => {
-        if (incomingCall && wsRef.current) {
-            // Send acceptance
-            wsRef.current.send(JSON.stringify({
+        if (!incomingCall || !wsRef.current) return;
+
+        wsRef.current.send(
+            JSON.stringify({
                 event: 'call_accepted',
                 conversation_id: incomingCall.conversationId,
-                jitsi_url: incomingCall.jitsiUrl
-            }));
-            
-            stopRingtone();
-            window.open(incomingCall.jitsiUrl, '_blank');
-            setIncomingCall(null);
-        }
+            })
+        );
+
+        stopRingtone();
+        window.open(incomingCall.jitsiUrl, '_blank');
+        setIncomingCall(null);
     };
 
     const declineCall = () => {
-        if (incomingCall && wsRef.current) {
-            wsRef.current.send(JSON.stringify({
+        if (!incomingCall || !wsRef.current) return;
+
+        wsRef.current.send(
+            JSON.stringify({
                 event: 'call_declined',
-                conversation_id: incomingCall.conversationId
-            }));
-            
-            stopRingtone();
-            setIncomingCall(null);
-        }
+                conversation_id: incomingCall.conversationId,
+            })
+        );
+
+        stopRingtone();
+        setIncomingCall(null);
     };
 
     if (!incomingCall) return null;
