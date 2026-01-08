@@ -6,7 +6,6 @@ import ConversationDetail from '@/app/components/inbox/ConversationDetail';
 import { getUserId } from '@/app/lib/actions';
 import apiService from '@/app/services/apiService';
 import { UserType } from '../page';
-import { MessageType } from './page';
 
 export type MessageType = {
     id: string;
