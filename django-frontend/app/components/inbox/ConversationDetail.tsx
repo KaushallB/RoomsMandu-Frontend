@@ -30,11 +30,10 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({
     
     const myuser = conversation.users?.find((user) => user.id == userId )
     const otherUser = conversation.users?.find((user) => user.id != userId )
-    const messageDiv = useRef<HTMLDivElement | null>(null);
+    const messageDiv = useRef(null);
     const [realtimeMsg, setrealtimeMsg] = useState<MessageType[]>([]);
 
-    const wsHost = (process.env.NEXT_PUBLIC_WS_HOST || 'ws://127.0.0.1:8002').replace(/\/$/, '');
-    const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(`${wsHost}/ws/${conversationId}/`,{
+    const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(`ws://127.0.0.1:8000/ws/${conversationId}/`,{
         share: false,
         shouldReconnect:() => true,
         },
@@ -42,36 +41,35 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({
 
     useEffect(() => {
         if (lastJsonMessage && typeof lastJsonMessage === 'object') {
-            const msg = lastJsonMessage as Record<string, unknown>;
-            const event = msg.event as string | undefined;
+            const event = lastJsonMessage.event;
             
             // Handle call events
-            if (event === 'call_request' && msg.caller_id !== userId) {
+            if (event === 'call_request' && lastJsonMessage.caller_id !== userId) {
                 // Someone is calling me
                 setCallState('incoming');
                 setIncomingCall({
-                    callerName: msg.caller_name as string,
-                    roomName: msg.room_name as string,
-                    jitsiUrl: msg.jitsi_url as string
+                    callerName: lastJsonMessage.caller_name as string,
+                    roomName: lastJsonMessage.room_name as string,
+                    jitsiUrl: lastJsonMessage.jitsi_url as string
                 });
             } else if (event === 'call_accepted') {
                 // Call was accepted - open the call
                 setCallState('in-call');
-                window.open(msg.jitsi_url as string, '_blank');
+                window.open(lastJsonMessage.jitsi_url as string, '_blank');
                 setTimeout(() => setCallState('idle'), 1000);
             } else if (event === 'call_declined') {
                 // Call was declined
                 setCallState('idle');
                 setIncomingCall(null);
-            } else if (event === 'typing' && msg.user_id !== userId) {
+            } else if (event === 'typing' && lastJsonMessage.user_id !== userId) {
                 // Only show typing if it's from the other user
                 setIsTyping(true);
                 setTimeout(() => setIsTyping(false), 3000);
-            } else if ('name' in msg && 'body' in msg && !event){
+            } else if ('name' in lastJsonMessage && 'body' in lastJsonMessage && !event){
                 const messages: MessageType = {
                     id: '',
-                    name: msg.name as string,
-                    body: msg.body as string,
+                    name: lastJsonMessage.name as string,
+                    body: lastJsonMessage.body as string,
                     sent_to: otherUser as UserType,
                     created_by: myuser as UserType,
                     conversationId: conversationId

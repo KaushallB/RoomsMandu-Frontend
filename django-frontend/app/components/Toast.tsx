@@ -72,8 +72,7 @@ const Toast = ({ message, type, onClose }: { message: string; type: ToastType; o
         success: 'bg-green-500',
         error: 'bg-red-500',
         info: 'bg-blue-500',
-        call: 'bg-purple-500',
-        inquiry: 'bg-yellow-500'
+        call: 'bg-purple-500'
     };
 
     return (

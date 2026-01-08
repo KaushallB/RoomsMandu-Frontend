@@ -123,7 +123,7 @@ const SignupModal = () => {
 
                 <CustomButton
                     label="Sign Up"
-                    onClick={() => { submitSignup(); }}
+                    onClick={(e) => { e.preventDefault(); submitSignup(); }}
                 />
             </form>
         </>

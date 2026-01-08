@@ -90,9 +90,8 @@ const CallNotification = () => {
     };
 
     const stopRingtone = () => {
-        const stopper = audioRef.current as unknown as { stop?: () => void };
-        if (stopper && typeof stopper.stop === 'function') {
-            stopper.stop();
+        if (audioRef.current && audioRef.current.stop) {
+            audioRef.current.stop();
         }
     };
 
