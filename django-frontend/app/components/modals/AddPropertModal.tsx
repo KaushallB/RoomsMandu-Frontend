@@ -162,7 +162,7 @@ const AddPropertyModal = () => {
                 </>
             ) : currentStep == 2 ? (
                 <>
-                    <h2 className='mb-6 text-2xl'> Describe your preference </h2>
+                    <h2 className='mb-6 text-2xl text-center'> Describe your preference </h2>
 
                     <div className='pt-3 pb-6 space-y-4'>
                         <div className='flex flex-col space-y-2'>
@@ -176,7 +176,7 @@ const AddPropertyModal = () => {
                         </div>
 
                         <div className='flex flex-col space-y-2'>
-                            <label>Descrtiption</label>
+                            <label>Description</label>
                             <textarea
                                 value={dataDescription}
                                 onChange={(e) => setdataDescription(e.target.value)}
