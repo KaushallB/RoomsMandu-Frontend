@@ -41,7 +41,7 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({
 
     useEffect(() => {
         if (lastJsonMessage && typeof lastJsonMessage === 'object') {
-            const event = lastJsonMessage.event;
+            const event = (lastJsonMessage as any).event;
             
             // Handle call events
             if (event === 'call_request' && lastJsonMessage.caller_id !== userId) {
