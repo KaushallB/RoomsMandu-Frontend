@@ -11,7 +11,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     return (
         <div 
             onClick={onClick}
-            className={`w-full py-4 bg-red-500 hover:bg-blue-600 text-white rounded-xl transition text-center cursor-pointer ${className}`}
+            className={`w-full py-4 bg-blue-500 hover:bg-red-600 text-white rounded-xl transition text-center cursor-pointer ${className}`}
         >
             {label}
         </div>
