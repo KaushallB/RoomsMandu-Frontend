@@ -16,18 +16,32 @@ const VideoCallModal = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     // Time slots (simple and formal)
-    const timeSlots = [
-        { value: '09:00', label: '9:00 AM' },
-        { value: '10:00', label: '10:00 AM' },
-        { value: '11:00', label: '11:00 AM' },
-        { value: '12:00', label: '12:00 PM' },
-        { value: '14:00', label: '2:00 PM' },
-        { value: '15:00', label: '3:00 PM' },
-        { value: '16:00', label: '4:00 PM' },
-        { value: '17:00', label: '5:00 PM' },
-        { value: '18:00', label: '6:00 PM' },
-        { value: '21:00', label: '9:00 PM' },
-    ];
+    // Generate 5-minute interval slots from 9:00 PM to 10:00 PM
+    const generateTimeSlots = (start: string, end: string, interval: number) => {
+        const slots = [];
+        let [startHour, startMinute] = start.split(":").map(Number);
+        const [endHour, endMinute] = end.split(":").map(Number);
+        while (
+            startHour < endHour || (startHour === endHour && startMinute <= endMinute)
+        ) {
+            const value = `${startHour.toString().padStart(2, "0")}:${startMinute
+                .toString()
+                .padStart(2, "0")}`;
+            const hour12 = startHour % 12 === 0 ? 12 : startHour % 12;
+            const ampm = startHour < 12 ? "AM" : "PM";
+            const label = `${hour12}:${startMinute.toString().padStart(2, "0")} ${ampm}`;
+            slots.push({ value, label });
+            startMinute += interval;
+            if (startMinute >= 60) {
+                startMinute -= 60;
+                startHour += 1;
+            }
+        }
+        return slots;
+    };
+
+    // Example: 9:00 PM (21:00) to 10:00 PM (22:00)
+    const timeSlots = generateTimeSlots("21:00", "22:00", 5);
 
     const formatDate = (date: Date) => {
         return date.toLocaleDateString('en-US', { 

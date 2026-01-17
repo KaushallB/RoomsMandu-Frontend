@@ -195,14 +195,14 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
 
                     <button 
                         onClick={submitForm}
-                        className="w-full mb-3 py-3 text-center text-white bg-green-500 hover:bg-green-600 rounded-xl transition cursor-pointer font-semibold"
+                        className="w-full mb-3 py-3 text-center text-white bg-purple-600 hover:bg-purple-700 rounded-xl transition cursor-pointer font-semibold shadow-md"
                     >
                         Send Inquiry
                     </button>
 
                     <button 
                         onClick={() => setShowForm(false)}
-                        className="w-full mb-6 py-3 text-center text-gray-600 bg-gray-200 hover:bg-gray-300 rounded-xl transition cursor-pointer font-semibold"
+                        className="w-full mb-6 py-3 text-center text-purple-700 bg-purple-100 hover:bg-purple-200 rounded-xl transition cursor-pointer font-semibold border border-purple-300 shadow-sm"
                     >
                         Cancel
                     </button>
@@ -212,7 +212,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
             {!showForm && (
                 <button 
                     onClick={handleContactOwner}
-                    className="w-full mb-6 py-3 text-center text-white bg-red-500 hover:bg-red-600 rounded-xl transition cursor-pointer font-semibold"
+                    className="w-full mb-6 py-3 text-center text-white bg-purple-600 hover:bg-purple-700 rounded-xl transition cursor-pointer font-semibold shadow-md"
                 >
                     Contact Owner
                 </button>
