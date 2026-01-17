@@ -24,7 +24,6 @@ const UserNav: React.FC<UserNavgProps> = ({
     // Generate UI Avatar URL with proper initials (First letter of first name + First letter of second name)
     const getAvatarUrl = () => {
         const name = userName || 'User';
-        console.log('Avatar name:', name); // Debug
         const parts = name.trim().split(' ').filter(p => p.length > 0);
         let initials = '';
         
@@ -38,7 +37,6 @@ const UserNav: React.FC<UserNavgProps> = ({
             initials = 'U';
         }
         
-        console.log('Avatar initials:', initials); // Debug
         // Use the initials directly in the URL
         return `https://ui-avatars.com/api/?name=${initials}&background=FDDA0D&color=000&size=32&font-size=0.5&rounded=true&bold=true`;
     };

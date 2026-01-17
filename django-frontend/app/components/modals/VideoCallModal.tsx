@@ -26,6 +26,7 @@ const VideoCallModal = () => {
         { value: '16:00', label: '4:00 PM' },
         { value: '17:00', label: '5:00 PM' },
         { value: '18:00', label: '6:00 PM' },
+        { value: '21:00', label: '9:00 PM' },
     ];
 
     const formatDate = (date: Date) => {
@@ -100,20 +101,27 @@ const VideoCallModal = () => {
                     Preferred Time
                 </label>
                 <div className="grid grid-cols-3 gap-2">
-                    {timeSlots.map((slot) => (
-                        <button
-                            key={slot.value}
-                            type="button"
-                            onClick={() => setSelectedTime(slot.value)}
-                            className={`py-2 px-3 rounded-lg border text-sm font-medium transition ${
-                                selectedTime === slot.value
-                                    ? 'bg-purple-600 text-white border-purple-600'
-                                    : 'bg-white text-gray-700 border-gray-300 hover:border-purple-400'
-                            }`}
-                        >
-                            {slot.label}
-                        </button>
-                    ))}
+                    {timeSlots.map((slot) => {
+                        const isSelected = selectedTime === slot.value;
+                        return (
+                            <button
+                                key={slot.value}
+                                type="button"
+                                onClick={() => setSelectedTime(slot.value)}
+                                className={`relative py-3 px-4 rounded-xl border text-base font-semibold transition focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm ${
+                                    isSelected
+                                        ? 'bg-purple-700 text-white border-purple-700 scale-105 ring-2 ring-purple-400'
+                                        : 'bg-white text-gray-700 border-gray-300 hover:border-purple-400'
+                                }`}
+                                style={{ minHeight: '48px' }}
+                            >
+                                {slot.label}
+                                {isSelected && (
+                                    <span className="absolute top-1 right-2 text-lg">✔️</span>
+                                )}
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
 
