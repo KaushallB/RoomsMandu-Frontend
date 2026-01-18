@@ -43,6 +43,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* SEO & Social Sharing Meta Tags */}
+        <title>RoomsMandu – Book Rooms for Students, Offices, Industries</title>
+        <meta name="description" content="Rooms booking app developed by Kaushal for students, offices, industries, and more. Find and book different types of rooms easily on RoomsMandu." />
+        <meta property="og:title" content="RoomsMandu – Book Rooms for Students, Offices, Industries" />
+        <meta property="og:description" content="Rooms booking app developed by Kaushal for students, offices, industries, and more. Find and book rooms easily on RoomsMandu." />
+        <meta property="og:url" content="https://roomsmandu.qzz.io/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/1.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="RoomsMandu – Book Rooms for Students, Offices, Industries" />
+        <meta name="twitter:description" content="Rooms booking app developed by Kaushal for students, offices, industries, and more. Find and book rooms easily on RoomsMandu." />
         {/* Favicon */}
         <link rel="icon" type="image/png" href="/1.png" />
         {/* Google Translate Widget */}

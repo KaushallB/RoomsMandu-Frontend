@@ -62,12 +62,6 @@ const PropertyDetails = ({params}: {params: Promise<{id: string}>}) => {
 
                     <hr />
 
-                    {/* Debug Info for Button Visibility */}
-                    <div className="mb-4 p-2 bg-yellow-100 text-xs text-gray-800 rounded">
-                        <strong>Debug:</strong> userId: {userId?.toString()} | landlordId: {property.landlord?.id?.toString()}
-                        <br />Button should show if userId exists and is NOT landlordId.
-                    </div>
-
                 {/* Owner Info with Contact */}
                 <div className="py-6">
                     <div className="flex items-center space-x-4">
