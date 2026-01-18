@@ -47,7 +47,7 @@ export default function RootLayout({
         <title>RoomsMandu – Book Rooms for Students, Offices, Industries</title>
         <meta name="description" content="Rooms booking app developed by Kaushal for students, offices, industries, and more. Find and book different types of rooms easily on RoomsMandu." />
         <meta property="og:title" content="RoomsMandu – Book Rooms for Students, Offices, Industries" />
-        <meta property="og:description" content="Rooms booking app developed by Kaushal for students, offices, industries, and more. Find and book rooms easily on RoomsMandu." />
+        <meta property="og:description" content="Rooms booking app developed by Kaushal for students, offices, industries, and more. Find and book different types of rooms easily on RoomsMandu." />
         <meta property="og:url" content="https://roomsmandu.qzz.io/" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://roomsmandu.qzz.io/logo.jpg" />
