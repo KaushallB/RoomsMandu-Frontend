@@ -29,13 +29,17 @@ const NotificationBell = () => {
             const uid = await getUserId();
             setUserId(uid);
 
+            console.log('[NotificationBell] userId for WebSocket:', uid);
+
             if (uid) {
                 // Load stored notifications
                 setNotifications(getNotifications());
 
                 const wsBase =
                     process.env.NEXT_PUBLIC_WS_HOST || 'ws://localhost:8000/ws';
-                const ws = new WebSocket(`${wsBase}/notifications/${uid}/`);
+                const wsUrl = `${wsBase}/notifications/${uid}/`;
+                console.log('[NotificationBell] Connecting WebSocket to:', wsUrl);
+                const ws = new WebSocket(wsUrl);
                 wsRef.current = ws;
 
                 ws.onopen = () => {
