@@ -1,22 +1,22 @@
-interface CustomButtonProps{
-    label:string;
+interface CustomButtonProps {
+    label: string;
     onClick: () => void;
     className?: string;
 }
 const CustomButton: React.FC<CustomButtonProps> = ({
-    label, 
+    label,
     onClick,
     className
 }) => {
     return (
-        <div 
+        <button
+            type="button"
             onClick={onClick}
-            className={`w-full py-4 bg-blue-500 hover:bg-red-600 text-white rounded-xl transition text-center cursor-pointer ${className}`}
+            className={`w-full py-4 rounded-xl transition text-center cursor-pointer font-semibold ${className}`}
         >
             {label}
-        </div>
-        
-    )
-}
+        </button>
+    );
+};
 
 export default CustomButton;

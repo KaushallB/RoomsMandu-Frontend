@@ -15,33 +15,9 @@ const VideoCallModal = () => {
     const [errors, setErrors] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Time slots (simple and formal)
-    // Generate 5-minute interval slots from 9:00 PM to 10:00 PM
-    const generateTimeSlots = (start: string, end: string, interval: number) => {
-        const slots = [];
-        let [startHour, startMinute] = start.split(":").map(Number);
-        const [endHour, endMinute] = end.split(":").map(Number);
-        while (
-            startHour < endHour || (startHour === endHour && startMinute <= endMinute)
-        ) {
-            const value = `${startHour.toString().padStart(2, "0")}:${startMinute
-                .toString()
-                .padStart(2, "0")}`;
-            const hour12 = startHour % 12 === 0 ? 12 : startHour % 12;
-            const ampm = startHour < 12 ? "AM" : "PM";
-            const label = `${hour12}:${startMinute.toString().padStart(2, "0")} ${ampm}`;
-            slots.push({ value, label });
-            startMinute += interval;
-            if (startMinute >= 60) {
-                startMinute -= 60;
-                startHour += 1;
-            }
-        }
-        return slots;
-    };
-
-    // Example: 9:00 PM (21:00) to 10:00 PM (22:00)
-    const timeSlots = generateTimeSlots("21:00", "22:00", 5);
+    // Hour and minute dropdowns
+    const hours = Array.from({ length: 24 }, (_, i) => i);
+    const minutes = Array.from({ length: 12 }, (_, i) => i * 5);
 
     const formatDate = (date: Date) => {
         return date.toLocaleDateString('en-US', { 
@@ -109,33 +85,44 @@ const VideoCallModal = () => {
                 />
             </div>
 
-            {/* Time Slots */}
+            {/* Hour and Minute Selection */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                     Preferred Time
                 </label>
-                <div className="grid grid-cols-3 gap-2">
-                    {timeSlots.map((slot) => {
-                        const isSelected = selectedTime === slot.value;
-                        return (
-                            <button
-                                key={slot.value}
-                                type="button"
-                                onClick={() => setSelectedTime(slot.value)}
-                                className={`relative py-3 px-4 rounded-xl border text-base font-semibold transition focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm ${
-                                    isSelected
-                                        ? 'bg-purple-700 text-white border-purple-700 scale-105 ring-2 ring-purple-400'
-                                        : 'bg-white text-gray-700 border-gray-300 hover:border-purple-400'
-                                }`}
-                                style={{ minHeight: '48px' }}
-                            >
-                                {slot.label}
-                                {isSelected && (
-                                    <span className="absolute top-1 right-2 text-lg">✔️</span>
-                                )}
-                            </button>
-                        );
-                    })}
+                <div className="flex gap-2">
+                    <select
+                        className="p-2 rounded border border-gray-300"
+                        value={selectedTime.split(':')[0] || ''}
+                        onChange={e => {
+                            const hour = e.target.value.padStart(2, '0');
+                            const minute = selectedTime.split(':')[1] || '00';
+                            setSelectedTime(`${hour}:${minute}`);
+                        }}
+                    >
+                        <option value="">Hour</option>
+                        {hours.map(h => (
+                            <option key={h} value={h.toString().padStart(2, '0')}>
+                                {h.toString().padStart(2, '0')}
+                            </option>
+                        ))}
+                    </select>
+                    <select
+                        className="p-2 rounded border border-gray-300"
+                        value={selectedTime.split(':')[1] || ''}
+                        onChange={e => {
+                            const minute = e.target.value.padStart(2, '0');
+                            const hour = selectedTime.split(':')[0] || '00';
+                            setSelectedTime(`${hour}:${minute}`);
+                        }}
+                    >
+                        <option value="">Minute</option>
+                        {minutes.map(m => (
+                            <option key={m} value={m.toString().padStart(2, '0')}>
+                                {m.toString().padStart(2, '0')}
+                            </option>
+                        ))}
+                    </select>
                 </div>
             </div>
 

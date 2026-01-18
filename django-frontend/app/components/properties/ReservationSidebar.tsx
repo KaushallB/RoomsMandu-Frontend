@@ -202,7 +202,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
 
                     <button 
                         onClick={() => setShowForm(false)}
-                        className="w-full mb-6 py-3 text-center text-purple-700 bg-purple-100 hover:bg-purple-200 rounded-xl transition cursor-pointer font-semibold border border-purple-300 shadow-sm"
+                        className="w-full mb-6 py-3 text-center text-white bg-purple-600 hover:bg-purple-200 rounded-xl transition cursor-pointer font-semibold border border-purple-300 shadow-sm"
                     >
                         Cancel
                     </button>
