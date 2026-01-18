@@ -50,21 +50,27 @@ const InboxPage = () => {
         <main className="max-w-[1500px] mx-auto px-6 pb-6 space-y-4">
             <h1 className='my-6 text-2xl'>Inbox</h1>
             
-            {conversations.length === 0 ? (
-                <p className="text-gray-500">No conversations yet</p>
-            ) : (
-                <>
-                    {conversations.map((conversation: ConversationType) => {
-                        return (
-                            <Conversations 
-                                key={conversation.id}
-                                userId={userId}
-                                conversation={conversation}
-                            />
-                        )
-                    })}
-                </>
-            )}
+                {conversations.filter((conversation: ConversationType) => 
+                    Array.isArray(conversation.users) &&
+                    conversation.users.some(user => user.id !== userId)
+                ).length === 0 ? (
+                    <p className="text-gray-500">No conversations yet</p>
+                ) : (
+                    <>
+                        {conversations
+                            .filter((conversation: ConversationType) => 
+                                Array.isArray(conversation.users) &&
+                                conversation.users.some(user => user.id !== userId)
+                            )
+                            .map((conversation: ConversationType) => (
+                                <Conversations 
+                                    key={conversation.id}
+                                    userId={userId}
+                                    conversation={conversation}
+                                />
+                            ))}
+                    </>
+                )}
 
         </main>
         

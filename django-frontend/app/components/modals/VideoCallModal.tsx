@@ -19,6 +19,8 @@ const VideoCallModal = () => {
     const hourOptions = [10,11,12,1,2,3,4,5,6];
     const ampmOptions = ["AM","PM"];
     const minutes = Array.from({ length: 12 }, (_, i) => i * 5);
+        const minTime = '10:00';
+        const maxTime = '18:00';
 
     const formatDate = (date: Date) => {
         return date.toLocaleDateString('en-US', { 
@@ -87,56 +89,19 @@ const VideoCallModal = () => {
             </div>
 
             {/* Improved Hour/Minute Selection */}
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
-                <div className="flex gap-2">
-                    <select
-                        className="p-2 rounded border border-gray-300"
-                        value={selectedTime.split(':')[0] || ''}
-                        onChange={e => {
-                            const hour = e.target.value;
-                            const minute = selectedTime.split(':')[1] || '00';
-                            setSelectedTime(`${hour}:${minute}`);
-                        }}
-                    >
-                        <option value="">Hour</option>
-                        {hourOptions.map(h => (
-                            <option key={h} value={h.toString().padStart(2, '0')}>
-                                {h.toString().padStart(2, '0')}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        className="p-2 rounded border border-gray-300"
-                        value={selectedTime.split(':')[1] || ''}
-                        onChange={e => {
-                            const minute = e.target.value.padStart(2, '0');
-                            const hour = selectedTime.split(':')[0] || '10';
-                            setSelectedTime(`${hour}:${minute}`);
-                        }}
-                    >
-                        <option value="">Minute</option>
-                        {minutes.map(m => (
-                            <option key={m} value={m.toString().padStart(2, '0')}>
-                                {m.toString().padStart(2, '0')}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        className="p-2 rounded border border-gray-300"
-                        value={selectedTime.split(' ')[1] || 'AM'}
-                        onChange={e => {
-                            const hourMinute = selectedTime.split(' ')[0] || '10:00';
-                            setSelectedTime(`${hourMinute} ${e.target.value}`);
-                        }}
-                    >
-                        {ampmOptions.map(ampm => (
-                            <option key={ampm} value={ampm}>{ampm}</option>
-                        ))}
-                    </select>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
+                    <input
+                        type="time"
+                        className="p-2 rounded border border-gray-300 w-full"
+                        min={minTime}
+                        max={maxTime}
+                        step={300} // 5 minute steps
+                        value={selectedTime}
+                        onChange={e => setSelectedTime(e.target.value)}
+                    />
+                    <p className="text-xs text-gray-400 mt-2">Available slots: 10:00 AM to 6:00 PM</p>
                 </div>
-                <p className="text-xs text-gray-400 mt-2">Available slots: 10:00 AM to 6:00 PM</p>
-            </div>
 
             {errors.length > 0 && (
                 <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">
