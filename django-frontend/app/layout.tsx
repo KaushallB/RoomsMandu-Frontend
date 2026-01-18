@@ -88,6 +88,12 @@ export default function RootLayout({
         <SearchModal />
         <VideoCallModal />
         <CallNotification />
+        {/* Toast notification for landlord and general notifications */}
+        {typeof window !== 'undefined' && (
+          <div suppressHydrationWarning>
+            {require('./components/ToastNotification').default()}
+          </div>
+        )}
         <ToastContainer />
 
         <footer className="w-full text-center py-4 text-gray-500 text-sm border-t mt-8">

@@ -15,8 +15,9 @@ const VideoCallModal = () => {
     const [errors, setErrors] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Hour and minute dropdowns
-    const hours = Array.from({ length: 24 }, (_, i) => i);
+    // 12-hour format, 10am to 6pm
+    const hourOptions = [10,11,12,1,2,3,4,5,6];
+    const ampmOptions = ["AM","PM"];
     const minutes = Array.from({ length: 12 }, (_, i) => i * 5);
 
     const formatDate = (date: Date) => {
@@ -85,23 +86,21 @@ const VideoCallModal = () => {
                 />
             </div>
 
-            {/* Hour and Minute Selection */}
+            {/* Improved Hour/Minute Selection */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Preferred Time
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
                 <div className="flex gap-2">
                     <select
                         className="p-2 rounded border border-gray-300"
                         value={selectedTime.split(':')[0] || ''}
                         onChange={e => {
-                            const hour = e.target.value.padStart(2, '0');
+                            const hour = e.target.value;
                             const minute = selectedTime.split(':')[1] || '00';
                             setSelectedTime(`${hour}:${minute}`);
                         }}
                     >
                         <option value="">Hour</option>
-                        {hours.map(h => (
+                        {hourOptions.map(h => (
                             <option key={h} value={h.toString().padStart(2, '0')}>
                                 {h.toString().padStart(2, '0')}
                             </option>
@@ -112,7 +111,7 @@ const VideoCallModal = () => {
                         value={selectedTime.split(':')[1] || ''}
                         onChange={e => {
                             const minute = e.target.value.padStart(2, '0');
-                            const hour = selectedTime.split(':')[0] || '00';
+                            const hour = selectedTime.split(':')[0] || '10';
                             setSelectedTime(`${hour}:${minute}`);
                         }}
                     >
@@ -123,7 +122,20 @@ const VideoCallModal = () => {
                             </option>
                         ))}
                     </select>
+                    <select
+                        className="p-2 rounded border border-gray-300"
+                        value={selectedTime.split(' ')[1] || 'AM'}
+                        onChange={e => {
+                            const hourMinute = selectedTime.split(' ')[0] || '10:00';
+                            setSelectedTime(`${hourMinute} ${e.target.value}`);
+                        }}
+                    >
+                        {ampmOptions.map(ampm => (
+                            <option key={ampm} value={ampm}>{ampm}</option>
+                        ))}
+                    </select>
                 </div>
+                <p className="text-xs text-gray-400 mt-2">Available slots: 10:00 AM to 6:00 PM</p>
             </div>
 
             {errors.length > 0 && (
