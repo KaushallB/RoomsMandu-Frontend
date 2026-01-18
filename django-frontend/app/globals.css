@@ -25,11 +25,12 @@ html, body {
   color: #171717;
 }
 
-input, textarea, select, button {
+input, textarea, select {
   background: #fff;
   color: #171717;
   border-color: #171717;
 }
+
 
 /* Toast animation */
 .animate-slide-in {
