@@ -50,7 +50,9 @@ export default function RootLayout({
         <meta property="og:description" content="Rooms booking app developed by Kaushal for students, offices, industries, and more. Find and book rooms easily on RoomsMandu." />
         <meta property="og:url" content="https://roomsmandu.qzz.io/" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="/1.png" />
+        <meta property="og:image" content="https://roomsmandu.qzz.io/1.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="RoomsMandu – Book Rooms for Students, Offices, Industries" />
         <meta name="twitter:description" content="Rooms booking app developed by Kaushal for students, offices, industries, and more. Find and book rooms easily on RoomsMandu." />
